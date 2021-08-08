@@ -4,6 +4,7 @@ import {Button,Container} from '@material-ui/core';
 import UserContext from '../store/usercontext.js';
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from "@material-ui/lab/Alert";
+import Alert from '../store/functions';
 import {Apple as AppleIcon,GitHub as GitHubIcon,Twitter as TwitterIcon} from '@material-ui/icons/';
 import Header from './header';
 import Footer from './footer';
@@ -12,10 +13,10 @@ function Login()
 {
 const history=useHistory();
 const currentUser=useContext(UserContext);
-  const { isLoggedin,getLoggedin}=currentUser;
+  const { isLoggedin,getLoggedin,message,setMessage,Alert}=currentUser;
 const [email,setEmail]=useState("");
 const [password,setPassword]=useState("");
-const [message,setMessage]=useState({success:"",failure:""});
+
 function loginsubmit()
 {
     const body={email:email,password:password};
@@ -43,10 +44,7 @@ function loginsubmit()
         },3000);
     })
 }
-function Alert(props) {
-    return <MuiAlert elevation={6} 
-                     variant="filled" {...props} />;
-  }
+
 return(
     <> 
     <div className="message">

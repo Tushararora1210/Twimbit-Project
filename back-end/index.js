@@ -5,12 +5,15 @@ const cookieParser = require("cookie-parser");
 const app=express();
 const port=process.env.PORT||3300;
 const userrouter=require('./routes/users');
+const postrouter=require('./routes/posts');
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+
 app.use(userrouter);
+app.use(postrouter);
 const password=process.env.password;
 const db=`mongodb+srv://Tushar:${password}@cluster0.iirxd.mongodb.net/sharepost?retryWrites=true&w=majority`;
 

@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-const User=require('./models/users');
+var User=require("./users.js");
 var PostSchema=new mongoose.Schema({
      title:{type:String,required:true},
      body:{type:String,required:true},
@@ -8,6 +8,6 @@ var PostSchema=new mongoose.Schema({
      likedby:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}]
  })
 
- const Post=mongoose.model('Post',PostSchema);
- module.exports=Post;
+ const post=mongoose.model('Post',PostSchema);
+ module.exports=post;
  

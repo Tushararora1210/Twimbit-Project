@@ -23,6 +23,7 @@ function App() {
     <Route exact path='/createpost' component={isLoggedin?Createpost:Login}></Route>
     <Route exact path='/login' component={isLoggedin?Home:Login}></Route>
     <Route exact path='/register' component={isLoggedin?Home:Register}></Route>
+    
     </div>
     {!isLoggedin && <Footer/>}
     </Router>

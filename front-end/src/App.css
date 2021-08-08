@@ -120,3 +120,53 @@ input[type="checkbox"]
     left:30vw;
     width:40vw;
 }
+.createpostclass
+{
+    text-align: center;
+}
+.createpostclass>textarea
+{
+    width:60vw;
+    height:80vh;
+    resize:none;
+}
+.createpostclass>textarea::placeholder
+{
+    font-size:15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.createpostbutton
+{
+    width:60vw;
+    background-color:red !important;
+    color:white !important;
+    font-weight: bolder !important;
+}
+.showpost
+{
+    margin-left:20vw;
+    width:60vw;
+    height:100px;
+    background-color:whitesmoke;
+    border-style: groove;
+    margin-bottom: 80px;
+    
+}
+.showpost>span
+{
+    position: relative;
+    top:-14px;
+    display: flex;
+    font-size: 0.7em;
+    
+}
+.showpost>h2
+{
+    position: relative;
+    top:-45px;
+    left:0;
+}
+.likeandcomment
+{
+    justify-content: space-between;
+}
