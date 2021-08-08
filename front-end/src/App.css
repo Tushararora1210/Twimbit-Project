@@ -1,0 +1,122 @@
+
+.applebutton
+{
+    background-color: black !important;
+    
+}
+.githubbutton
+{
+    background-color: gray !important;
+}
+
+.twitterbutton
+{
+    background-color: blueviolet !important;
+}
+.submitbutton
+{
+    background-color: blue!important;
+}
+.applebutton,.githubbutton,.twitterbutton,.submitbutton
+{
+    font-weight: bolder !important;
+    color:white !important;
+    display: block !important;
+    width:100% !important;
+    margin-bottom: 20px !important;
+    display: flex !important;
+   
+}
+
+.havepassword
+{
+    width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+   font-size: 14px;
+}
+.havepassword>span
+{
+    background:#fff; 
+    padding:0 10px; 
+}
+input
+{
+    width:100%;
+    height:30px ;
+    margin-top:7px;
+    margin-bottom: 7px;
+}
+.loginform
+{
+    text-align: left;
+}
+input[type="checkbox"]
+{
+    display:inline;
+    width:1.5vw;
+    height: 15px;
+}
+.logo 
+{
+    background-color: black;
+    font-weight: bolder;
+    color:white;
+    height:35px;
+    text-align: center;
+}
+.header
+{
+    display: flex;
+    justify-content: space-between;
+    border-style:ridge;
+    margin-bottom: 20px;
+    position: fixed;
+    top:0;
+}
+.headerfirst
+{
+    display: flex;
+
+    justify-content: space-between;
+}
+.headersecond
+{
+    display: flex;
+    justify-content: space-between;
+}
+.searchbox
+{
+    height:5px !important;
+    width:30vw !important;
+    margin-left:15vw !important;
+}
+.headersecond>a
+{
+    text-decoration: none;
+    font-weight: bolder;
+    margin-right:2.5vw;
+}
+.headersecond>img
+{
+    margin-right:2.5vw;
+    width:4vw;
+    border-radius: 50%;;
+}
+.footer
+{
+    text-align: center;
+    margin-top:40px;
+    padding: 6vw;
+    background-color: lightgray;
+    font-size: 15px;
+}
+.message
+{
+    position: fixed;
+    top:0;
+    left:30vw;
+    width:40vw;
+}
