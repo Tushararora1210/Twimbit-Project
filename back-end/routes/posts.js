@@ -12,6 +12,16 @@ router.get('/showallposts',(req,res)=>{
         res.status(422).json({error:err});
     })
 })
+router.get('/getpost/:postid',(req,res)=>{
+    post.find({_id:req.params.postid}).populate('postedby','username')
+    .then((posts)=>{
+        if(!posts.length)
+        {
+            return res.status(404).json({error:"Post with the following id not found"});
+        }
+        return res.json({foundpost:posts[0]});
+    })
+})
 router.post('/createpost',isLoggedin,(req,res)=>{
 const {title,body}=req.body;
 console.log(req.userId);
@@ -85,6 +95,7 @@ post.find({_id:postid})
 })
 
 })
+
 
 router.get('/deletepost/:postid',isLoggedin,(req,res)=>{
     const {postid}=req.params;

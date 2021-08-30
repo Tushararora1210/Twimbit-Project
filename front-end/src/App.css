@@ -142,6 +142,19 @@ input[type="checkbox"]
     color:white !important;
     font-weight: bolder !important;
 }
+.showexpandedpost,.showcomments
+{
+    margin-left:20vw;
+    width:60vw;
+    background-color:whitesmoke;
+    border-style: groove;
+  
+}
+.topcomment
+{
+    display: flex;
+    justify-content: space-between;
+}
 .showpost
 {
     margin-left:20vw;
@@ -152,6 +165,11 @@ input[type="checkbox"]
     margin-bottom: 80px;
     
 }
+.postbutton
+{
+    color:antiquewhite !important;
+    font-weight: bolder !important;
+}
 .changeposts
 {
     margin-left: 20vw;
@@ -159,7 +177,7 @@ input[type="checkbox"]
     display: flex;
     justify-content: space-between;
 }
-.showpost>span
+.showpost>span,.showexpandedpost>span
 {
     position: relative;
     top:-14px;
@@ -167,11 +185,50 @@ input[type="checkbox"]
     font-size: 0.7em;
     
 }
-.showpost>h2
+.showpost>#redirectlink>h2 ,.showexpandedpost>h2
+{
+    position: relative;
+    top:-35px;
+    left:0;
+}
+#commenttext
 {
     position: relative;
     top:-45px;
     left:0;
+
+}
+
+.showexpandedpost>p
+{
+    position:relative;
+    top:-40px;
+    left:0;
+}
+.showcomment
+{
+    width:55vw;
+    border:2px outset black;
+    margin-bottom: 10vh;
+    background-color:tan;
+    overflow-wrap: break-word;
+}
+.commenttopsection
+{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    top:-25px;
+    left:0;
+}
+.commenttopsection>p{
+    font-size: 0.7em;
+    margin-top: 30px;
+}
+#redirectlink
+{
+    text-decoration: none;
 }
 .likeandcomment
 {

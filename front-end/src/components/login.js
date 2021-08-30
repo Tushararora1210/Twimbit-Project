@@ -13,10 +13,11 @@ function Login()
 {
 const history=useHistory();
 const currentUser=useContext(UserContext);
-  const { isLoggedin,getLoggedin,message,setMessage,Alert}=currentUser;
+  const { isLoggedin,getLoggedin,message,setMessage}=currentUser;
 const [email,setEmail]=useState("");
 const [password,setPassword]=useState("");
-
+console.log("Login page")
+console.log(currentUser);
 function loginsubmit()
 {
     const body={email:email,password:password};

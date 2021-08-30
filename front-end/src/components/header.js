@@ -28,7 +28,7 @@ const Header = () => {
                 </Box>
              <Box className="headerfirst" >
                 <Typography variant="h5" className="logo">
-                    SharePost
+                   <a href="/" style={{textDecoration:"none",color:"white"}}> SharePost </a>
                 </Typography>
                 <Box display={{ xs: 'none', sm:'none', md:'block'}}>
                 <TextField className="searchbox" label="Search" size="small" variant="outlined" />

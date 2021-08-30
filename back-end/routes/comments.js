@@ -74,10 +74,9 @@ Comment.find({_id:commentid})
 })
 
 router.get('/getcomments/:postid',(req,res)=>{
-Comment.find({Commentedon:req.params.postid})
+Comment.find({Commentedon:req.params.postid}).populate('Commentedby','username')
 .then((comments)=>{
-    console.log(comments);
-return res.json({commentcount:comments.length});
+return res.json({commentcount:comments.length,commentonpost:comments});
 })
 .catch((err)=>{
     return res.status(404).json({error:"Post with the following id not found"});

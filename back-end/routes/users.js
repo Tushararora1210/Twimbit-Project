@@ -17,7 +17,7 @@ router.get('/github/callback',(req,res)=>{
             } 
     })
     .then((response)=>{
-        console.log(response.data);
+
         const access_token=extractaccesstoken(response.data);
         if(access_token.length){    
         axios.get(`https://api.github.com/user`,{
@@ -32,7 +32,7 @@ router.get('/github/callback',(req,res)=>{
             .then((users)=>{
                 if(users.length)
                 {
-                    console.log(users[0]);
+                    // console.log(users[0]);
                     const token=jwt.sign({
                         user_id:users[0]._id
                     },process.env.tokenkey);
@@ -44,7 +44,7 @@ router.get('/github/callback',(req,res)=>{
                 authdetails:"Github"});
                 newuser.save()
                 .then((user)=>{
-                    console.log(user);
+                    // console.log(user);
                     const token=jwt.sign({
                         user_id:user._id
                     },process.env.tokenkey);
@@ -104,7 +104,7 @@ router.post("/login",(req,res)=>{
             .then((users)=>{
                 if(users.length)
                 {
-                    console.log(users[0]);
+                    //console.log(users[0]);
                     const token=jwt.sign({
                         user_id:users[0]._id
                     },process.env.tokenkey);
@@ -124,6 +124,19 @@ router.get("/logout", isLoggedin, (req, res) => {
       .status(200)
       .json({ message: "Successfully logged out" });
   });
+router.get("/user/:username",(req,res)=>{
+   // console.log(req.params.username);
+    user.find({username:req.params.username})
+    .then((users)=>{
+        if(!users.length)
+        {
+            return res.status(404).json({error:"User with the following Username is not present"});
+        }
+        const founduser=users[0];
+        founduser.password="";
+        res.json({user:founduser});
+    })
+})
 router.get("/getuser",isLoggedin,(req,res)=>{
     user.find({_id:req.userId})
     .then((users)=>{
