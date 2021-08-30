@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
-const User=require('./models/users');
-const Post=require('./models/posts');
+var User=require('./users');
+const Post=require('./posts');
 var CommentSchema=new mongoose.Schema({
      text:{type:String,required:true},
      Commentedby:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},

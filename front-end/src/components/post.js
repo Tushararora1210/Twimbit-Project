@@ -8,31 +8,53 @@ import ChatBubbleOutlineRoundedIcon from '@material-ui/icons/ChatBubbleOutlineRo
 function Post(props){
     const currentUser=useContext(UserContext);
     const {Loggedinuser}=currentUser;
-    const{image}=Loggedinuser;
+    const {image}=Loggedinuser;
     const [likecolor,setLikecolor]=useState("LightGray");
     const [likes,setlikes]=useState(0);
-
+    const [comments,setComments]=useState(0);
     function getpostlike(postid)
     {
-        axios.get(`/getlikes/{postid}`)
+        
+        axios.get("/getlikes/"+postid)
         .then((response)=>{
             setlikes(response.data.likecount);
         })
         .catch(err=>{
         console.log("Not fetched")
         })
+
+        axios.get("/isliked/"+postid)
+        .then((response)=>{
+            console.log("response is",response);
+            if(response.data.liked=="true")
+            {
+                setLikecolor("Tomato");
+            }
+            else
+            {
+                setLikecolor("LightGray");
+            }
+        })
     }
     function likepost(postid)
     {
         axios.get("/likeanddislikepost/"+postid)
         .then(response=>{
-            console.log(response);
+
             getpostlike(postid);
-            likecolor=="LightGray"?setLikecolor("Tomato"):setLikecolor("LightGray");
+            
         })
        
     }
+    function getpostcomment(postid)
+    {
+        axios.get("/getcomments/"+postid)
+        .then(response=>{
+            setComments(response.data.commentcount);
+        })
+    }
     getpostlike(props.postid);
+    getpostcomment(props.postid);
     return (
         <div className="showpost">
             <span>
@@ -55,7 +77,7 @@ function Post(props){
         </Button>
         <Button variant="contained" 
                 size="small"  className="commentbutton"  >
-             <ChatBubbleOutlineRoundedIcon/> {props.commentcount}
+             <ChatBubbleOutlineRoundedIcon/> {comments}
         </Button>
         </span>
 

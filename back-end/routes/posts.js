@@ -27,6 +27,24 @@ newPost.save()
     res.json({error:err});
 })
 })
+router.get('/isliked/:postid',isLoggedin,(req,res)=>{
+    post.find({_id:req.params.postid})
+    .then((posts)=>{
+        if(!posts.length)
+        {
+            return res.status(404).json({message:"Post with this id doesn't exist"});
+        }
+        if(posts[0].likedby.indexOf(req.userId)==-1)
+        {
+            return res.json({liked:"false"})
+        }
+        else
+        {
+            return res.json({liked:"true"})
+        }
+        
+    })
+})
 router.get('/getlikes/:postid',(req,res)=>{
     post.find({_id:req.params.postid})
     .then((posts)=>{

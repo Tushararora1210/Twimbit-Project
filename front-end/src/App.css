@@ -152,6 +152,13 @@ input[type="checkbox"]
     margin-bottom: 80px;
     
 }
+.changeposts
+{
+    margin-left: 20vw;
+    width:60vw;
+    display: flex;
+    justify-content: space-between;
+}
 .showpost>span
 {
     position: relative;
