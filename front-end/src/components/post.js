@@ -12,6 +12,7 @@ function Post(props){
     const {Loggedinuser}=currentUser;
     const [likecolor,setLikecolor]=useState("LightGray");
     const [likes,setlikes]=useState(0);
+    const [image,setimage]=useState("");
     const [comments,setComments]=useState(0);
     const history=useHistory();
     function getpostlike(postid)
@@ -46,6 +47,19 @@ function Post(props){
         })
        
     }
+    function getpostuserimage(postid)
+    {
+        axios.get("/getpost/"+postid)
+        .then((response)=>{
+            const foundpost=response.data.foundpost;
+            //console.log(foundpost);
+    
+            axios.get("/user/"+foundpost.postedby.username)
+            .then((response)=>{
+                setimage(response.data.user.image)
+            })
+        })
+    }
     function getpostcomment(postid)
     {
         axios.get("/getcomments/"+postid)
@@ -55,11 +69,12 @@ function Post(props){
     }
     getpostlike(props.postid);
     getpostcomment(props.postid);
+    getpostuserimage(props.postid);
     return (
         <div className="showpost">
            
             <span>
-            <img src={props.image}  style={{width:"2.5em",height:"2.5em",marginTop:"1.5em",borderRadius:"50%"}} />
+            <img src={image==""?props.image:image}  style={{width:"2.5em",height:"2.5em",marginTop:"1.5em",borderRadius:"50%"}} />
            <div>
             <p>{props.username}</p>
             <p style={{fontSize:"0.8em",position:"relative",top:"-12px"}}>Posted on</p>

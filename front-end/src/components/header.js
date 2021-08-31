@@ -9,7 +9,8 @@ import profimage from '../prof.png';
 const Header = () => {
     const currentUser=useContext(UserContext);
     const { isLoggedin,getLoggedin,getLoggedinUser,Loggedinuser}=currentUser;
-    const{image}=Loggedinuser;
+    console.log(Loggedinuser);
+    const{image,username}=Loggedinuser;
     const history=useHistory();
     function logout()
     {
@@ -36,7 +37,12 @@ const Header = () => {
             </Box>
             {isLoggedin?<Box className="headersecond" display={{ xs: 'none', sm:'none',md:'block'}}>
                      <a href="/createpost">Create Post</a>
-                    <img src={image===""?profimage:image}  />
+                     
+                     <img src={image===""?profimage:image}  />
+                     <p style={{fontSize:"0.7em",position:"relative",left:"-20px"}}>{username}</p>
+            
+
+                      
                     <Button variant="contained" size="small" onClick={logout}>
                         Logout
                     </Button>
