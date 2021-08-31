@@ -87,7 +87,7 @@ post.find({_id:postid})
        posts[0].likedby.splice(posts[0].likedby.indexOf(req.userId),1);
        posts[0].save()
        .then(()=>{
-           res.json({message:"Disliked Successfully"});
+           res.json({message:"Disliked  Successfully"});
        })
      }
   
