@@ -32,13 +32,13 @@ Post.find({_id:postid})
 
 router.get('/deletecomment/:commentid',isLoggedin,(req,res)=>{
     const {commentid}=req.params;
-    Comment.find({_id:commentid})
+    Comment.find({_id:commentid}).populate('Commentedon','postedby')
     .then((comments)=>{
         if(!comments.length)
         {
             return res.status(404).json({error:"No Comment with this id is present"});
         }
-        if(comments[0].Commentedby==req.userId)
+        if(comments[0].Commentedby==req.userId || comments[0].Commentedon.postedby==req.userId)
         {
             comments[0].remove()
             .then(()=>{
@@ -81,7 +81,7 @@ Comment.find({_id:commentid})
 })
 
 router.get('/getcomments/:postid',(req,res)=>{
-Comment.find({Commentedon:req.params.postid}).populate('Commentedby','username')
+Comment.find({Commentedon:req.params.postid}).populate('Commentedby','username').populate('Commentedon','postedby')
 .then((comments)=>{
 return res.json({commentcount:comments.length,commentonpost:comments});
 })

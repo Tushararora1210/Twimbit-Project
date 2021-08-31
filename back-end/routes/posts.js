@@ -99,7 +99,7 @@ post.find({_id:postid})
 
 router.get('/deletepost/:postid',isLoggedin,(req,res)=>{
     const {postid}=req.params;
-Post.find({_id:postid})
+post.find({_id:postid})
 .then((posts)=>{
     if(!posts.length)
     {
@@ -109,10 +109,11 @@ Post.find({_id:postid})
     {
         posts[0].remove()
         .then(()=>{
-            res.json({message:"Post deleted Successsfully"});
+           return res.json({message:"Post deleted Successsfully"});
         })
     }
-    res.status(401).json({error:"You are not authorised to delete this post"});
+
+    return res.status(401).json({error:"You are not authorised to delete this post"});
 })
 })
 router.post('/updatepost',isLoggedin,(req,res)=>{

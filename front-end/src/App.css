@@ -183,6 +183,7 @@ input[type="checkbox"]
     top:-14px;
     display: flex;
     font-size: 0.7em;
+
     
 }
 .showpost>#redirectlink>h2 ,.showexpandedpost>h2
@@ -190,6 +191,12 @@ input[type="checkbox"]
     position: relative;
     top:-35px;
     left:0;
+}
+.delicon
+{
+    position: relative;
+    margin-left: auto;
+    top:10px;
 }
 #commenttext
 {

@@ -35,7 +35,7 @@ const Header = () => {
                 </Box>
             </Box>
             {isLoggedin?<Box className="headersecond" display={{ xs: 'none', sm:'none',md:'block'}}>
-                     <a href="">Create Post</a>
+                     <a href="/createpost">Create Post</a>
                     <img src={image===""?profimage:image}  />
                     <Button variant="contained" size="small" onClick={logout}>
                         Logout

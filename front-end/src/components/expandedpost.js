@@ -1,4 +1,5 @@
 import React,{useContext,useState} from "react";
+import { useHistory } from "react-router-dom";
 import UserContext from '../store/usercontext.js';
 import axios from "axios";
 import profimage from '../prof.png';
@@ -9,6 +10,7 @@ import ChatBubbleOutlineRoundedIcon from '@material-ui/icons/ChatBubbleOutlineRo
 import Alert from '../store/functions';
 function Expandedpost(props)
 {
+    const history=useHistory();
     const currentUser=useContext(UserContext);
     const { isLoggedin,getLoggedin,message,setMessage,Loggedinuser}=currentUser;
     const [likecolor,setLikecolor]=useState("LightGray");
@@ -27,6 +29,39 @@ function Expandedpost(props)
         textInput.current.focus();
         
       }
+    function deletepost()
+    {
+        axios.get("/deletepost/"+props.match.params.id)
+        .then((res)=>{
+            for(var i=0;i<allcomments.size();i++)
+            {
+                deletecommentwithoutmessage(allcomments[i]._id);
+            }
+            setMessage({success:"Post deleted Successfully",failure:""});
+            setTimeout(()=>{
+                setMessage({success:"",failure:""});
+            },1000)
+           
+            
+
+        })
+        .catch((err)=>{
+            setMessage({success:"",failure:"Unable to delete Post"});
+            setTimeout(()=>{
+                setMessage({success:"",failure:""});
+            },3000)
+        })
+    }
+    function deletecommentwithoutmessage(commentid)
+    {
+        axios.get("/deletecomment/"+commentid)
+        .then((res)=>{
+            console.log("response is",res);
+        })
+        .catch((err)=>{
+            console.log("error is",err);
+        })
+    }
     function deletecomment(commentid)
     {
         axios.get("/deletecomment/"+commentid)
@@ -142,7 +177,7 @@ function Expandedpost(props)
             setComments(response.data.commentcount);
             setallcomments(response.data.commentonpost);
         })
-        //console.log("comments are",allcomments)
+        console.log("comments are",allcomments)
 
         
     }
@@ -163,6 +198,13 @@ function Expandedpost(props)
            <div>
             <p>{postusername}</p>
             <p style={{fontSize:"0.8em",position:"relative",top:"-12px"}}>Posted on</p>
+            </div>
+            <div className="delicon">
+            {isLoggedin && Loggedinuser.username==postusername && <DeleteIcon onClick={()=>{
+                deletepost();
+               history.push('/');
+                //window.location.reload();
+            }}/>}
             </div>
             </span>
             
@@ -197,7 +239,7 @@ function Expandedpost(props)
                          <img src={profimage}  style={{width:"1.5em",height:"1.5em",marginTop:"1.5em",borderRadius:"50%"}} />
                         <p>{eachcomment.Commentedby.username}</p>
                         </div>
-                        {isLoggedin && Loggedinuser.username==eachcomment.Commentedby.username && <DeleteIcon onClick={()=>{
+                        {isLoggedin && (Loggedinuser.username==eachcomment.Commentedby.username || Loggedinuser._id==eachcomment.Commentedon.postedby) && <DeleteIcon onClick={()=>{
                             deletecomment(eachcomment._id);
                             getpostcomment(props.match.params.id);
                         }}/> }
