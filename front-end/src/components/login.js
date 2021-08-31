@@ -3,7 +3,7 @@ import {useHistory, Redirect,render} from "react-router-dom";
 import {Button,Container} from '@material-ui/core';
 import UserContext from '../store/usercontext.js';
 import { Snackbar } from '@material-ui/core';
-import MuiAlert from "@material-ui/lab/Alert";
+
 import Alert from '../store/functions';
 import {Apple as AppleIcon,GitHub as GitHubIcon,Twitter as TwitterIcon} from '@material-ui/icons/';
 import Header from './header';
@@ -32,7 +32,8 @@ function loginsubmit()
 
     })
     .catch((err)=>{
-        if(email==""|| password=="")
+        console.log("error is",err)
+        if(email===""|| password==="")
         {
             setMessage({success:"",failure:"Please Enter all the fields"});
         }
@@ -48,7 +49,7 @@ function loginsubmit()
 
 return(
     <> 
-    <div className="message">
+    <div className="message" style={{zIndex:"4"}}>
         {message.success!="" && <Alert severity="success">{message.success}</Alert>}
     {message.failure!="" && <Alert severity="error">{message.failure}</Alert> }
       
@@ -57,12 +58,7 @@ return(
         <Container maxWidth="sm" style={{backgroundColor:"white",borderStyle:"ridge",textAlign:"center"}}>
         <h1>Welcome to the Post Sharing Community</h1>
         <p>Our Community is a community of more than 6lakh developers</p>
-        <Button variant="contained" 
-                size="large" startIcon={<AppleIcon/>}
-                
-                className="applebutton" >
-            Continue With Apple
-        </Button>
+        
 
         <a href='https://github.com/login/oauth/authorize?client_id=5e73531deb7590e9d133' style={{textDecoration:"none"}}> <Button variant="contained" 
                 size="large" startIcon={<GitHubIcon/>} className="githubbutton">
@@ -70,11 +66,6 @@ return(
         </Button>
         </a>
 
-
-        <Button variant="contained" 
-                size="large" startIcon={<TwitterIcon/>} className="twitterbutton" >
-             Continue With Twitter
-        </Button>
         <p className="havepassword">
         <span >
         Have a Password?Continue with your email address

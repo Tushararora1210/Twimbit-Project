@@ -2,6 +2,7 @@ const express=require('express');
 const router=express.Router();
 const axios=require('axios');
 const dotenv=require('dotenv');
+const bcrypt=require('bcrypt');
 dotenv.config();
 const clientID=process.env.clientid;
 const clientSecret=process.env.clientsecret;
@@ -69,29 +70,33 @@ router.get('/github/callback',(req,res)=>{
       })
         
     })
-router.get('/posts',isLoggedin,(req,res)=>{
-    res.send("Posts");
-})
+
 router.post('/register',(req,res)=>{
     const {name,email,username,password,bio}=req.body;
     if(!name|| !email || !username || !password )
     {
         res.status(422).json({error:"Please Enter all the fields"});
     }
-    const newuser=new user({name,username,email,password,authdetails:"sharepost",bio});
-    newuser.save()
-    .then((user)=>{
-        console.log(user);
-        const token=jwt.sign({
-        user_id:user._id
-        },process.env.tokenkey);
-        return res.cookie("access_token", token).status(200)
-        .json({ message: "Registered successfully" }); 
-    })
-    .catch(err=>{
-        res.status(409).json({error:err});
-    })
+    bcrypt.hash(password,10)
+    .then((hashedpassword)=>{
 
+        const newuser=new user({name,username,email,password:hashedpassword,authdetails:"sharepost",bio});
+        newuser.save()
+        .then((user)=>{
+            console.log(user);
+            const token=jwt.sign({
+            user_id:user._id
+            },process.env.tokenkey);
+            return res.cookie("access_token", token).status(200)
+            .json({ message: "Registered successfully" }); 
+        })
+        .catch(err=>{
+            res.status(409).json({error:err});
+        })
+    
+
+    })
+    
 })
 
 router.post("/login",(req,res)=>{
@@ -100,19 +105,34 @@ router.post("/login",(req,res)=>{
     {
         res.status(422).json({error:"Please Enter all the fields"});
     }
-    user.find({email,password})  
+    user.find({email})  
             .then((users)=>{
                 if(users.length)
                 {
+                    bcrypt.compare(password,users[0].password)
+                    .then((result)=>{
+                        // console.log("result is",result)
+                        if(result)
+                        {
+                            //console.log(users[0]);
+                            const token=jwt.sign({
+                                user_id:users[0]._id
+                            },process.env.tokenkey);
+                            return res.cookie("access_token", token).status(200)
+                            .json({ message: "Logged in successfully" });
+                        }
+                    })
+                    .catch(err=>{
+                        console.error(err);
+                    return res.status(422).json({ error: err })
+                    })
                     //console.log(users[0]);
-                    const token=jwt.sign({
-                        user_id:users[0]._id
-                    },process.env.tokenkey);
-                    return res.cookie("access_token", token).status(200)
-                    .json({ message: "Logged in successfully" });
+                    
                 }
+                else
+                {
                 res.status(422).json({error:"Either email or password is invalid"});
-                
+                }
 })
 })
 router.get("/isloggedin",isLoggedin,(req,res)=>{
