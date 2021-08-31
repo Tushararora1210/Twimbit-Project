@@ -32,7 +32,7 @@ Post.find({_id:postid})
 
 router.get('/deletecomment/:commentid',isLoggedin,(req,res)=>{
     const {commentid}=req.params;
-    comment.find({_id:commentid})
+    Comment.find({_id:commentid})
     .then((comments)=>{
         if(!comments.length)
         {
@@ -42,11 +42,18 @@ router.get('/deletecomment/:commentid',isLoggedin,(req,res)=>{
         {
             comments[0].remove()
             .then(()=>{
-                res.json({message:"Comment deleted Successsfully"});
+                return res.json({message:"Comment deleted Successsfully"});
             })
         }
-        res.status(401).json({error:"You are not authorised to delete this comment"});
+        else
+        {
+           return res.status(401).json({error:"You are not authorised to delete this comment"});
+        }
+        
 
+})
+.catch(err=>{
+    console.log(err);
 })
 })
 

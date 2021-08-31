@@ -27,7 +27,24 @@ function Expandedpost(props)
         textInput.current.focus();
         
       }
-    
+    function deletecomment(commentid)
+    {
+        axios.get("/deletecomment/"+commentid)
+        .then((res)=>{
+            console.log("response is",res);
+            setMessage({success:"Comment deleted Successfully",failure:""});
+            setTimeout(()=>{
+                setMessage({success:"",failure:""});
+            },3000)
+        })
+        .catch((err)=>{
+            console.log("error is",err);
+            setMessage({success:"",failure:"Unable to delete comment"});
+            setTimeout(()=>{
+                setMessage({success:"",failure:""});
+            },3000)
+        })
+    }
     function commentonpost()
     {
         if(typedtext=="")
@@ -44,14 +61,15 @@ function Expandedpost(props)
                 postid:props.match.params.id
             })
             .then((response)=>{
-                 
+               
                 getpostcomment(props.match.params.id);  
                 setMessage({success:"Commented Successfully",failure:""});
             setTimeout(()=>{
                 setMessage({success:"",failure:""});
-            },3000)
+            },3000) 
             })
             .catch(err=>{  
+               
                 setMessage({success:"",failure:"Failed to Comment"});
             setTimeout(()=>{
                 setMessage({success:"",failure:""});
@@ -179,7 +197,10 @@ function Expandedpost(props)
                          <img src={profimage}  style={{width:"1.5em",height:"1.5em",marginTop:"1.5em",borderRadius:"50%"}} />
                         <p>{eachcomment.Commentedby.username}</p>
                         </div>
-                        {isLoggedin && Loggedinuser.username==eachcomment.Commentedby.username && <DeleteIcon/> }
+                        {isLoggedin && Loggedinuser.username==eachcomment.Commentedby.username && <DeleteIcon onClick={()=>{
+                            deletecomment(eachcomment._id);
+                            getpostcomment(props.match.params.id);
+                        }}/> }
                         
                         </div>
                         <p id="commenttext">{eachcomment.text} </p>
