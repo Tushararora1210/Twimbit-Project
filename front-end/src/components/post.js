@@ -1,4 +1,5 @@
 import React,{useContext,useState} from 'react'
+import { useHistory } from 'react-router';
 import UserContext from '../store/usercontext.js';
 import axios from "axios";
 import {Link} from "react-router-dom";
@@ -12,9 +13,9 @@ function Post(props){
     const [likecolor,setLikecolor]=useState("LightGray");
     const [likes,setlikes]=useState(0);
     const [comments,setComments]=useState(0);
+    const history=useHistory();
     function getpostlike(postid)
-    {
-        
+    {   
         axios.get("/getlikes/"+postid)
         .then((response)=>{
             setlikes(response.data.likecount);
@@ -78,7 +79,7 @@ function Post(props){
         </Button>
         <Button variant="contained" 
                 size="small"  className="commentbutton"  >
-             <ChatBubbleOutlineRoundedIcon/> {comments}
+             <ChatBubbleOutlineRoundedIcon/> <a style={{textDecoration:"none"}} href={"/showpost/"+props.postid}>{comments}</a>
         </Button>
         </span>
 

@@ -10,7 +10,7 @@ import ChatBubbleOutlineRoundedIcon from '@material-ui/icons/ChatBubbleOutlineRo
 import Alert from '../store/functions';
 function Expandedpost(props)
 {
-    const history=useHistory();
+   const history=useHistory();
     const currentUser=useContext(UserContext);
     const { isLoggedin,getLoggedin,message,setMessage,Loggedinuser}=currentUser;
     const [likecolor,setLikecolor]=useState("LightGray");
@@ -31,29 +31,36 @@ function Expandedpost(props)
       }
     function deletepost()
     {
-        axios.get("/deletepost/"+props.match.params.id)
-        .then((res)=>{
-            for(var i=0;i<allcomments.size();i++)
+        for(var i=0;i<allcomments.length;i++)
             {
+                console.log(allcomments);
                 deletecommentwithoutmessage(allcomments[i]._id);
             }
+        axios.get("/deletepost/"+props.match.params.id)
+        .then((res)=>{
+            
             setMessage({success:"Post deleted Successfully",failure:""});
             setTimeout(()=>{
                 setMessage({success:"",failure:""});
             },1000)
+           history.push('/');
+           window.location.reload();
            
             
 
         })
         .catch((err)=>{
+            console.log("error is",err)
             setMessage({success:"",failure:"Unable to delete Post"});
             setTimeout(()=>{
                 setMessage({success:"",failure:""});
             },3000)
         })
+        
     }
     function deletecommentwithoutmessage(commentid)
     {
+        console.log("commentid is",commentid);
         axios.get("/deletecomment/"+commentid)
         .then((res)=>{
             console.log("response is",res);
@@ -202,7 +209,7 @@ function Expandedpost(props)
             <div className="delicon">
             {isLoggedin && Loggedinuser.username==postusername && <DeleteIcon onClick={()=>{
                 deletepost();
-               history.push('/');
+                
                 //window.location.reload();
             }}/>}
             </div>

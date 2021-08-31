@@ -112,8 +112,14 @@ post.find({_id:postid})
            return res.json({message:"Post deleted Successsfully"});
         })
     }
+    else{
+        return res.status(401).json({error:"You are not authorised to delete this post"});
+    }
 
-    return res.status(401).json({error:"You are not authorised to delete this post"});
+    
+})
+.catch(err=>{
+    console.log("Error is",err)
 })
 })
 router.post('/updatepost',isLoggedin,(req,res)=>{

@@ -1,4 +1,5 @@
 import React, { useState,useContext } from "react";
+import {useHistory} from "react-router-dom";
 import {TextField,Button} from "@material-ui/core";
 import UserContext from '../store/usercontext.js';
 import MuiAlert from "@material-ui/lab/Alert";
@@ -9,6 +10,7 @@ function Createpost(){
     const { message,setMessage}=currentUser;
     const [title,setTitle]=useState("");
     const [body,setBody]=useState("");
+    const history=useHistory();
     function createpostfun()
     {
         if(title=="" || body=="")
@@ -33,7 +35,11 @@ function Createpost(){
         }
         setTimeout(()=>{
             setMessage({success:"",failure:""});
-        },3000)
+            history.push('/');
+            window.location.reload();
+        },1000)
+
+
 
     }
     return (
