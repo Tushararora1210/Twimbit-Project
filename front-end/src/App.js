@@ -7,6 +7,7 @@ import Footer from './components/footer';
 import Createpost from './components/createpost';
 import Register from './components/register';
 import Expandedpost from './components/expandedpost';
+import Searchposts from './components/searchposts';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import UserContext from './store/usercontext.js';
 import {useContext,useState,useEffect} from 'react';
@@ -26,7 +27,8 @@ function App() {
     <Route exact path='/login' component={isLoggedin?Home:Login}></Route>
     <Route exact path='/register' component={isLoggedin?Home:Register}></Route>
     <Route exact path='/showpost/:id' component={isLoggedin?Expandedpost:Register}></Route>
-    </div>
+    <Route exact path='/searchposts/:title' component={Searchposts}></Route>
+     </div>
     {!isLoggedin && <Footer/>}
     </Router>
   );

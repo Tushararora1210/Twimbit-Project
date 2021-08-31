@@ -5,7 +5,7 @@ import axios from "axios";
 import {Button} from "@material-ui/core";
 
 
-function Home(){
+function Searchposts(props){
     const [currpage,setCurrpage]=useState(1);
     const [posts,setPosts]=useState([]);
     const [isnext,setIsnext]=useState(true);
@@ -14,8 +14,8 @@ function Home(){
     
     function Fetchposts()
     {
-        
-        axios.get('/showallposts')
+        console.log(props.match.params.title)
+        axios.get("/searchpost/"+props.match.params.title)
         .then((response)=>{
             const currposts=[];
             console.log("Currpage is",currpage);
@@ -100,4 +100,4 @@ function Home(){
     )
 }
 
-export default Home;
+export default Searchposts;

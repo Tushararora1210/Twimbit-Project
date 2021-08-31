@@ -8,7 +8,7 @@ import UserContext from '../store/usercontext.js';
 import profimage from '../prof.png';
 const Header = () => {
     const currentUser=useContext(UserContext);
-    const { isLoggedin,getLoggedin,getLoggedinUser,Loggedinuser}=currentUser;
+    const { isLoggedin,getLoggedin,getLoggedinUser,Loggedinuser,searchtext,setSearchtext}=currentUser;
     console.log(Loggedinuser);
     const{image,username}=Loggedinuser;
     const history=useHistory();
@@ -32,14 +32,22 @@ const Header = () => {
                    <a href="/" style={{textDecoration:"none",color:"white"}}> SharePost </a>
                 </Typography>
                 <Box display={{ xs: 'none', sm:'none', md:'block'}}>
-                <TextField className="searchbox" label="Search" size="small" variant="outlined" />
+                <TextField 
+                onKeyPress={(e)=>{
+                    if(e.key==='Enter')
+                    {
+                        window.location.href="http://localhost:3000/searchposts/"+e.target.value
+                    }
+
+                }}
+                className="searchbox" label="Search" size="small" variant="outlined" />
                 </Box>
             </Box>
             {isLoggedin?<Box className="headersecond" display={{ xs: 'none', sm:'none',md:'block'}}>
                      <a href="/createpost">Create Post</a>
                      
                      <img src={image===""?profimage:image}  />
-                     <p style={{fontSize:"0.7em",position:"relative",left:"-20px"}}>{username}</p>
+                    <b> <p style={{fontSize:"0.8em",position:"relative",left:"-20px"}}>{username}</p> </b>
             
 
                       

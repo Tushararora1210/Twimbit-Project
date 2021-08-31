@@ -13,6 +13,7 @@ function Post(props){
     const [likecolor,setLikecolor]=useState("LightGray");
     const [likes,setlikes]=useState(0);
     const [image,setimage]=useState("");
+    const [postedon,setpostedon]=useState();
     const [comments,setComments]=useState(0);
     const history=useHistory();
     function getpostlike(postid)
@@ -47,13 +48,45 @@ function Post(props){
         })
        
     }
+    function timediff(date,presdate)
+    {
+        var msec=presdate-(new Date(date));
+        var sec=msec/1000;
+        if(sec<60)
+        {
+            return "few seconds ago";
+        }
+        else if(sec<3600)
+        {
+            return String(Math.floor(sec/60))+" minutes ago";
+        }
+        else if(sec<86400)
+        {
+            return String(Math.floor(sec/3600))+" hours ago";
+        }
+        else if(sec<2592000)
+        {
+            return String(Math.floor(sec/86400))+" days ago";
+        }
+        else if(sec<31104000)
+        {
+            return String(Math.floor(sec/2592000))+" months ago";
+        }
+        else
+        {
+            return String(Math.floor(sec/31104000))+" years ago";
+        }
+
+    }
     function getpostuserimage(postid)
     {
         axios.get("/getpost/"+postid)
         .then((response)=>{
             const foundpost=response.data.foundpost;
-            //console.log(foundpost);
-    
+            console.log(foundpost)
+            
+
+            setpostedon(timediff(foundpost.createdAt,new Date()))
             axios.get("/user/"+foundpost.postedby.username)
             .then((response)=>{
                 setimage(response.data.user.image)
@@ -77,13 +110,13 @@ function Post(props){
             <img src={image==""?props.image:image}  style={{width:"2.5em",height:"2.5em",marginTop:"1.5em",borderRadius:"50%"}} />
            <div>
             <p>{props.username}</p>
-            <p style={{fontSize:"0.8em",position:"relative",top:"-12px"}}>Posted on</p>
+            <p style={{fontSize:"0.8em",position:"relative",top:"-12px"}}>Posted {postedon} {}</p>
             </div>
             </span>
             
-            <Link to={"/showpost/"+props.postid} id="redirectlink">
+            <a style={{textDecoration:"none"}} href={"/showpost/"+props.postid} id="redirectlink">
             <h2>{props.title}</h2>
-            </Link>
+            </a>
             <span class="likeandcomment">
             <Button variant="contained" 
                 size="small"  className="likebutton" 
@@ -92,10 +125,12 @@ function Post(props){
 
             <ThumbUpAltRoundedIcon/> {likes}
         </Button>
+        <a style={{textDecoration:"none"}} href={"/showpost/"+props.postid} id="redirectlink">
         <Button variant="contained" 
                 size="small"  className="commentbutton"  >
-             <ChatBubbleOutlineRoundedIcon/> <a style={{textDecoration:"none"}} href={"/showpost/"+props.postid}>{comments}</a>
+             <ChatBubbleOutlineRoundedIcon/> {comments}
         </Button>
+        </a>
         </span>
 
         </div>

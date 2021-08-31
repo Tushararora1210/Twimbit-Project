@@ -12,6 +12,15 @@ router.get('/showallposts',(req,res)=>{
         res.status(422).json({error:err});
     })
 })
+router.get('/searchpost/:title',(req,res)=>{
+    post.find({title:req.params.title}).populate('postedby','username')
+    .then((posts)=>{
+        return res.json({posts:posts});
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+})
 router.get('/getpost/:postid',(req,res)=>{
     post.find({_id:req.params.postid}).populate('postedby','username')
     .then((posts)=>{

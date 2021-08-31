@@ -8,6 +8,7 @@ export function UserContextProvider(props)
 const [isLoggedin,setIsLoggedin]=useState(undefined);
 const [Loggedinuser,setLoggedinuser]=useState({image:""});
 const [message,setMessage]=useState({success:"",failure:""});
+
 async function getLoggedin()
 {
     axios.get('/isloggedin')
@@ -47,6 +48,7 @@ else
         getLoggedinUser:getLoggedinUser,
         message:message,
         setMessage:setMessage,
+        
     }
 return(
     <UserContext.Provider value={context}>
